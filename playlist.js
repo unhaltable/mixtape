@@ -4,11 +4,11 @@ Router.map(function() {
 });
 
 if (Meteor.isServer) {
-  var rdio = Meteor.npmRequire('rdio')({
-    rdio_api_key: 'uq3vzfjq8hng3cc7rr7gx92y',
-    rdio_api_shared: process.env.RDIO_SECRET,
-    callback_url: 'http://localhost:3000'
-  });
+//  var rdio = Meteor.npmRequire('rdio')({
+//    rdio_api_key: 'uq3vzfjq8hng3cc7rr7gx92y',
+//    rdio_api_shared: process.env.RDIO_SECRET,
+//    callback_url: 'http://localhost:3000'
+//  });
 
   Meteor.methods({
     getPlaybackToken: function () {
@@ -28,6 +28,10 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isClient) {
+
+  Rdio.requestCredential({}, function(credentialTokenOrErr) {
+    debugger;
+  });
 
   Meteor.call('foo', function () {
     console.info(arguments);
@@ -66,6 +70,4 @@ if (Meteor.isClient) {
     }
   });
 
-
 }
-
