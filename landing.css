@@ -6,11 +6,16 @@
   padding: 0;
 }
 
+html {
+    height: 100%
+}
+
 body {
   background-image: url(assets/img/blurrybg.png);
   background-size: cover;
   background-position: top;
   background-color: #293332;
+  height: 100%;
   color: #fff;
   font: 16px/20px 'Lato', sans-serif;
   text-align: center;
@@ -18,13 +23,11 @@ body {
 
 .shade {
     background-color: grey;
-    opacity: 0.3;
+    background: rgba(0,0,0,.3);
     margin-left: 33%;
     margin-right: 33%;
-}
-
-.title {
-  margin: 5em;
+    height: 100%;
+    padding: 5em 2em;
 }
 
 .buttons {
