@@ -4,11 +4,6 @@
 
 <body>
   <h1>MIXTAPE</h1>
-  {{> home}}
-  <br><br>
-  {{> mixtape}}
-  <br>
-  {{> add_song}}
 </body>
 
 <template name="home">
@@ -16,15 +11,12 @@
   <label for="mixtape-id">Enter a Mixtape ID</label>
   <input id="mixtape-id" type="text">
   <input type="submit" value="Play Mixtape">
-  {{> rdio_account}}
-</template>
-
-<template name="rdio_account">
-  <button class="sign-in">Sign in with Rdio</button>
 </template>
 
 <template name="mixtape">
+  {{> current_song}}
   {{> songs}}
+  {{> add_song}}
 </template>
 
 <!--<template name="temp_songs">
@@ -34,7 +26,12 @@
   </ul>
 </template>-->
 
+<template name="current_song">
+  <div id="now-playing"></div>
+</template>
+
 <template name="songs">
+  <h3>Playlist</h3>
   {{#each songs}}
     <input type="button" value="Upvote" />
     <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
@@ -43,5 +40,9 @@
 
 <template name="add_song">
   <h2>Add new song </h2>
-  <p>Title: <input type="text" id="new_song_title"> Artist: <input type="text" id="new_song_artist"> <input type="button" value="Enter" /></p>
+  <label for="new_song_title">Title</label>
+  <input type="text" id="new_song_title">
+  <label for="new_song_artist">Artist</label>
+  <input type="text" id="new_song_artist">
+  <input type="submit" value="Add song">
 </template>

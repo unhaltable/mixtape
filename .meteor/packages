@@ -9,4 +9,7 @@ insecure
 accounts-ui
 npaton:accounts-rdio
 iron:router
+meteorhacks:npm
 
+
+npm-container
