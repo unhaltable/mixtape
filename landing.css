@@ -35,21 +35,26 @@ input {
     padding: 15px;
     background: rgba(255,255,255,0.5);
     margin: 0 0 10px 0;    
+    text-align: center;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-   color:    #D3CDCD;
+    color:    #D3CDCD;
+    text-align: center;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #D3CDCD;
-   opacity:  1;
+    color:    #D3CDCD;
+    opacity:  1;
+    text-align: center;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #D3CDCD;
-   opacity:  1;
+    color:    #D3CDCD;
+    opacity:  1;
+    text-align: center;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-   color:    #D3CDCD;
+    color:    #D3CDCD;
+    text-align: center;
 }
 
 .join-button {
