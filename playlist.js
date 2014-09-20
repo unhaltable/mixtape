@@ -5,13 +5,8 @@ Router.map(function() {
 
 if (Meteor.isClient) {
 
-
-  Template.Songs.songs = function () {
+  Template.songs.songs = function () {
     return Songs.find({}, { sort: { upvotes: 1}});
-  }
-
-  Template.messages.messages = function () {
-    return Messages.find({}, { sort: { time: -1 }});
   };
 
 }
