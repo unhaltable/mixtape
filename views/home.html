@@ -1,42 +1,14 @@
-<head>
-  <title>mixtape</title>
-</head>
-
-<body>
-<h1>MIXTAPE</h1>
-</body>
-
 <template name="home">
-  {{> loginButtons align="right"}}
-  <label for="mixtape-id">Enter a Mixtape ID</label>
-  <input id="mixtape-id" type="text">
-  <input type="submit" value="Play Mixtape">
-</template>
 
-<template name="mixtape">
-  {{> current_song}}
-  {{> songs}}
-  {{> add_song}}
-</template>
+  <div class="title">
+    <img src="/img/logo.png" alt="Get Mixin'">
+    <h1>MIXTAPE</h1>
+  </div>
 
+  <div class="buttons">
+    <input type="text" name="mixtape-tag" placeholder="Mixtape ID"><br>
+    <button id="join-button" class="button">Join Mixtape</button>
+    <button id="new-button" class="button">New Mixtape</button>
+  </div>
 
-<template name="current_song">
-  <div id="now-playing"></div>
-</template>
-
-<template name="songs">
-  <h3>Playlist</h3>
-  {{#each songs}}
-  <input type="button" value="Upvote" />
-  <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
-  {{/each}}
-</template>
-
-<template name="add_song">
-  <h2>Add new song</h2>
-  <label for="new_song_title">Title</label>
-  <input type="text" id="new_song_title">
-  <label for="new_song_artist">Artist</label>
-  <input type="text" id="new_song_artist">
-  <input type="submit" value="Add song">
 </template>
