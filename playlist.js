@@ -11,7 +11,7 @@ if (Meteor.isClient) {
       alert('yup');
     }
   });
-
+  
 }
 
 if (Meteor.isServer) {
