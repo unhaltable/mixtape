@@ -1,7 +1,4 @@
-Router.map(function() {
-  this.route('home', {path: '/'});
-  this.route('mixtape');
-});
+
 
 if (Meteor.isServer) {
   function getUserRdio() {
