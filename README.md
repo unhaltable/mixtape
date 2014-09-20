@@ -26,8 +26,3 @@ Start a local test server by running:
 - `.meteor/`: Meteor-related metadata, including Meteor version and packages
 - `private/`: Server-only assets
 - `public/`: Static public assets
-
-
-### Required Packages
-    meteor add accounts-ui
-    meteor add accounts-facebook

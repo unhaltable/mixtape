@@ -6,10 +6,6 @@
 standard-app-packages
 autopublish
 insecure
-<<<<<<< HEAD
-iron:router
-=======
 accounts-ui
 accounts-facebook
->>>>>>> package requirements perhaps who knows
 

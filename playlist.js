@@ -1,14 +1,4 @@
-Router.map(function() {
-  this.route('mixtape', {path: '/'});
-  this.route('about');
-});
-
 if (Meteor.isClient) {
-
-  // Set up Spotify API
-  var spotifyApi = new SpotifyWebApi();
-  spotifyApi.setAccessToken('79a509f23c3f4486b94489e71111d418');
-  spotifyApi.setPromiseImplementation(Q);
 
   Template.spotify_account.events({
     'click .sign-in': function () {
@@ -33,7 +23,7 @@ if (Meteor.isClient) {
 
   Template.messages.messages = function () {
     return Messages.find({}, { sort: { time: -1 }});
-  }
+  };
 
   Template.input.events = {
   'keydown input#message' : function (event) {
