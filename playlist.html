@@ -3,45 +3,19 @@
 </head>
 
 <body>
-  <h1>Playlist app</h1>
-  {{> current_song }}
-  {{> mixtape}}
-  {{> rdio_account}}
-  {{> song queue}}
-  {{> messages}}
-  {{> input}}
-  
+  <h1>MIXTAPE</h1>
 </body>
 
-<template name="current_song">
-  {{> rdio_account}}
-  {{> messages}}
-  {{> input}}
+<template name="home">
+  {{> loginButtons align="right"}}
+  <label for="mixtape-id">Enter a Mixtape ID</label>
+  <input id="mixtape-id" type="text">
 </template>
 
 <template name="mixtape">
-  {{> rdio_account}}
+  {{> loginButtons align="right"}}
 </template>
 
 <template name="rdio_account">
-  <button class="sign-in">Sign in with Rdio</button>
-</template>
 
-<template name="song queue">
-  {{#each messages}}
-    <strong>{{name}}:</strong> {{artist}} {{upvotes}} <br>
-  {{/each}}
-</template>
-
-<template name="messages">
-  <p>
-    Welcome to the collab playlist app! Please log in to show your username. Upvote your fav songs!
-  </p>
-  {{#each messages}}
-    <strong>{{name}}:</strong> {{message}}<br>
-  {{/each}}
-</template>
-
-<template name="input">
-  <p>Message: <input type="text" id="message"></p>
 </template>
