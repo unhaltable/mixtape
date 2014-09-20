@@ -1,5 +1,5 @@
-play:list
-=========
+Mixtape
+=======
 
 Real-time music playlist collaboration.
 
@@ -20,3 +20,9 @@ Start a local test server by running:
 ### Deploying to production
 
     meteor deploy playlist.meteor.com
+
+### Folder structure
+
+- `.meteor/`: Meteor-related metadata, including Meteor version and packages
+- `private/`: Server-only assets
+- `public/`: Static public assets

@@ -1,13 +1,14 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to playlist.";
-  };
 
-  Template.hello.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+  // Set up Spotify API
+  var spotifyApi = new SpotifyWebApi();
+  spotifyApi.setAccessToken('79a509f23c3f4486b94489e71111d418');
+  spotifyApi.setPromiseImplementation(Q);
+
+  Template.spotify_account.events({
+    'click .sign-in': function () {
+
+      alert('yup');
     }
   });
 
@@ -18,7 +19,12 @@ if (Meteor.isClient) {
   Template.input.events = {
   'keydown input#message' : function (event) {
       if (event.which == 13) { // 13 is the enter key event
-        var name = 'Anonymous';
+        if(Meteor.user()){
+          var name = Meteor.user().profile.name;
+        }
+        else{
+          var name = 'Anonymous';  
+        }
         var message = document.getElementById('message');
    
         if (message.value != '') {

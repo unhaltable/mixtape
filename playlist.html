@@ -1,17 +1,31 @@
 <head>
-  <title>playlist</title>
+  <title>mixtape</title>
 </head>
 
 <body>
-  <h1>Collab Playlist</h1>
-  
+  {{> loginButtons align="right"}}<br>
+  <h1>Playlist app</h1>
+  {{> welcome}}
+  {{> current_song}}
   {{> messages}}
   {{> input}}
-  
+  {{> spotify_account}}
 </body>
 
 <template name="hello">
   <input type="button" value="Click" />
+  
+</body>
+
+<template name="welcome">
+  <p>
+    Welcome to the example chat app! Please log in to show your username.
+  </p>
+</template>
+
+
+<template name="spotify_account">
+  <button class="sign-in">Sign in with Spotify</button>
 </template>
 
 <template name="messages">
@@ -27,5 +41,4 @@
 
 <template name="input">
   <p>Message: <input type="text" id="message"></p>
-  <input type="button" value="Send" />
 </template>
