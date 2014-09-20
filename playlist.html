@@ -4,6 +4,12 @@
 
 <body>
   <h1>MIXTAPE</h1>
+  {{> current_song }}
+  {{> mixtape}}
+  {{> rdio_account}}
+  {{> song_queue}}
+  {{> messages}}
+  {{> input}}
 </body>
 
 <template name="home">
@@ -23,4 +29,20 @@
     <li>Never Gonna Give You Up - Rick Astley</li>
     <li>A Sky Full of Stars - Coldplay</li>
   </ul>
+  {{> rdio_account}}
+</template>
+
+<template name="rdio_account">
+  <button class="sign-in">Sign in with Rdio</button>
+</template>
+
+<template name="song_queue">
+  <input type="button" value="Click" />
+  {{#each messages}}
+    <strong>{{name}}:</strong> {{artist}} {{upvotes}} <br>
+  {{/each}}
+</template>
+
+<template name="songs">
+  
 </template>
