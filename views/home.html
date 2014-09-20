@@ -3,7 +3,7 @@
 </head>
 
 <body>
-  <h1>MIXTAPE</h1>
+<h1>MIXTAPE</h1>
 </body>
 
 <template name="home">
@@ -27,13 +27,13 @@
 <template name="songs">
   <h3>Playlist</h3>
   {{#each songs}}
-    <input type="button" value="Upvote" />
-    <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
+  <input type="button" value="Upvote" />
+  <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
   {{/each}}
 </template>
 
 <template name="add_song">
-  <h2>Add new song </h2>
+  <h2>Add new song</h2>
   <label for="new_song_title">Title</label>
   <input type="text" id="new_song_title">
   <label for="new_song_artist">Artist</label>

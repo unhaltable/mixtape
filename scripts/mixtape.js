@@ -61,13 +61,13 @@ if (Meteor.isClient) {
       var song_title = document.getElementById('new_song_title');
       var song_artist = document.getElementById('new_song_artist');
 
-        if (new_song_title.value != '' && new_song_artist.value != '') {
-            Songs.insert({
-            name: song_title.value,
-            artist: song_artist.value,
-            upvotes: 0
-          });
-      
+      if (new_song_title.value != '' && new_song_artist.value != '') {
+        Songs.insert({
+          name: song_title.value,
+          artist: song_artist.value,
+          upvotes: 0
+        });
+
         document.getElementById('new_song_title').value = '';
         document.getElementById('new_song_artist').value = '';
         song_title.value = '';
