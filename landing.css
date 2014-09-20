@@ -7,10 +7,20 @@
 }
 
 body {
+  background-image: url(assets/img/blurrybg.png);
+  background-size: cover;
+  background-position: top;
   background-color: #293332;
   color: #fff;
   font: 16px/20px 'Lato', sans-serif;
   text-align: center;
+}
+
+.shade {
+    background-color: grey;
+    opacity: 0.3;
+    margin-left: 33%;
+    margin-right: 33%;
 }
 
 .title {
@@ -39,21 +49,21 @@ input {
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-    color:    #D3CDCD;
+    color:    #FFF;
     text-align: center;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #D3CDCD;
+    color:    #FFF;
     opacity:  1;
     text-align: center;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    #D3CDCD;
+    color:    #FFF;
     opacity:  1;
     text-align: center;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-    color:    #D3CDCD;
+    color:    #FFF;
     text-align: center;
 }
 
