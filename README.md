@@ -29,5 +29,5 @@ Start a local test server by running:
 
 
 ### Required Packages
-    ```meteor add accounts-ui```
-    ```meteor add accounts-facebook```
+    meteor add accounts-ui
+    meteor add accounts-facebook
