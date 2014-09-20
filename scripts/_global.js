@@ -7,7 +7,6 @@
  */
 Router.map(function() {
   this.route('home', {path: '/'});
-  this.route('create');
   this.route('mixtape', {
     path: ':tag',
     data: function () {
