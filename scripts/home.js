@@ -5,7 +5,7 @@ if (Meteor.isClient) {
      */
     'click #new-button': function () {
       var mixtapeTag = $('input[name="mixtape-tag"]').val();
-      alert(mixtapeTag);
+      window.location.href = '/new/' + mixtapeTag;
     }
   });
 }
