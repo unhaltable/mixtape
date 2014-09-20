@@ -4,12 +4,10 @@
 
 <body>
   <h1>MIXTAPE</h1>
-  {{> current_song }}
+  {{> home}}
   {{> mixtape}}
   {{> rdio_account}}
   {{> song_queue}}
-  {{> messages}}
-  {{> input}}
 </body>
 
 <template name="home">
@@ -37,9 +35,8 @@
 </template>
 
 <template name="song_queue">
-  <input type="button" value="Click" />
   {{#each messages}}
-    <strong>{{name}}:</strong> {{artist}} {{upvotes}} <br>
+    <strong>{{name}}:</strong> {{artist}}<br>
   {{/each}}
 </template>
 

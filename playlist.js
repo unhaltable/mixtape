@@ -6,7 +6,7 @@ Router.map(function() {
 if (Meteor.isClient) {
 
   Template.songs.songs = function () {
-    return Songs.find({}, { sort: { upvotes: 1}});
+    return Songs.find({}, { sort: { time: -1}});
   }
 
   Template.song_queue.events({
@@ -20,8 +20,8 @@ if (Meteor.isClient) {
   /*
   Template.messages.messages = function () {
     return Messages.find({}, { sort: { time: -1 }});
->>>>>>> song queue shit
   };
+  */
 
 }
 
@@ -30,3 +30,4 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+ 
