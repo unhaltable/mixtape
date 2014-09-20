@@ -2,9 +2,19 @@ body {
     background-color: #293332;
     font-family: 'Lato', sans-serif;    
     color: white;
+}
+
+#title {
     margin-left: auto;
     margin-right: auto;
     margin-top: 0;
+    margin-bottom: 0;
+}
+
+#button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50;
     margin-bottom: 0;
 }
 
