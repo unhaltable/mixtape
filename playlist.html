@@ -5,9 +5,10 @@
 <body>
   <h1>MIXTAPE</h1>
   {{> home}}
+  <br><br>
   {{> mixtape}}
-  {{> rdio_account}}
-  {{> song_queue}}
+  <br>
+  {{> add_song}}
 </body>
 
 <template name="home">
@@ -15,18 +16,6 @@
   <label for="mixtape-id">Enter a Mixtape ID</label>
   <input id="mixtape-id" type="text">
   <input type="submit" value="Play Mixtape">
-</template>
-
-<template name="mixtape">
-  {{> loginButtons align="right"}}
-  {{> songs}}
-</template>
-
-<template name="songs">
-  <ul>
-    <li>Never Gonna Give You Up - Rick Astley</li>
-    <li>A Sky Full of Stars - Coldplay</li>
-  </ul>
   {{> rdio_account}}
 </template>
 
@@ -34,12 +23,25 @@
   <button class="sign-in">Sign in with Rdio</button>
 </template>
 
-<template name="song_queue">
-  {{#each messages}}
-    <strong>{{name}}:</strong> {{artist}}<br>
+<template name="mixtape">
+  {{> songs}}
+</template>
+
+<!--<template name="temp_songs">
+  <ul>
+    <li>Never Gonna Give You Up - Rick Astley</li>
+    <li>A Sky Full of Stars - Coldplay</li>
+  </ul>
+</template>-->
+
+<template name="songs">
+  {{#each songs}}
+    <input type="button" value="Upvote" />
+    <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
   {{/each}}
 </template>
 
-<template name="songs">
-  
+<template name="add_song">
+  <h2>Add new song </h2>
+  <p>Title: <input type="text" id="new_song_title"> Artist: <input type="text" id="new_song_artist"> <input type="button" value="Enter" /></p>
 </template>

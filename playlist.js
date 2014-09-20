@@ -1,27 +1,40 @@
-Router.map(function() {
+/*Router.map(function() {
   this.route('home', {path: '/'});
   this.route('mixtape');
-});
+});*/
 
 if (Meteor.isClient) {
 
   Template.songs.songs = function () {
-    return Songs.find({}, { sort: { time: -1}});
+    return Songs.find({}, { sort: { upvotes: -1}});
   }
 
-  Template.song_queue.events({
+  Template.songs.events({
     'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+      Songs.update(this._id, {$inc: {upvotes: 1}});
+    }
+  })
+
+  Template.add_song.events({
+    'click input': function () {
+      var song_title = document.getElementById('new_song_title');
+      var song_artist = document.getElementById('new_song_artist');
+
+        if (new_song_title.value != '' && new_song_artist.value != '') {
+            Songs.insert({
+            name: song_title.value,
+            artist: song_artist.value,
+            upvotes: 0,
+          });
+      
+        document.getElementById('new_song_title').value = '';
+        document.getElementById('new_song_artist').value = '';
+        song_title.value = '';
+        song_artist.value = '';
+      }
     }
   });
 
-  /*
-  Template.messages.messages = function () {
-    return Messages.find({}, { sort: { time: -1 }});
-  };
-  */
 
 }
 
