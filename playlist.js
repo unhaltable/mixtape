@@ -10,6 +10,12 @@ if (Meteor.isServer) {
 //    callback_url: 'http://localhost:3000'
 //  });
 
+  ServiceConfiguration.configurations.insert({
+    service: "rdio",
+    clientId: "a",
+    secret: "b"
+  });
+
   Meteor.methods({
     getPlaybackToken: function () {
       if (false /*you want to throw an error*/)

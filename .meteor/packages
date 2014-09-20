@@ -7,9 +7,10 @@ standard-app-packages
 autopublish
 insecure
 accounts-ui
-npaton:accounts-rdio
 iron:router
 meteorhacks:npm
 
 
 npm-container
+service-configuration
+npaton:rdio
