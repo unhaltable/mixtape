@@ -8,6 +8,7 @@
   {{> current_song }}
   {{> mixtape}}
   {{> rdio_account}}
+  {{> song queue}}
   {{> messages}}
   {{> input}}
   
@@ -25,6 +26,12 @@
 
 <template name="rdio_account">
   <button class="sign-in">Sign in with Rdio</button>
+</template>
+
+<template name="song queue">
+  {{#each messages}}
+    <strong>{{name}}:</strong> {{artist}} {{upvotes}} <br>
+  {{/each}}
 </template>
 
 <template name="messages">
