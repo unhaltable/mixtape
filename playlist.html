@@ -10,12 +10,17 @@
   {{> loginButtons align="right"}}
   <label for="mixtape-id">Enter a Mixtape ID</label>
   <input id="mixtape-id" type="text">
+  <input type="submit" value="Play Mixtape">
 </template>
 
 <template name="mixtape">
   {{> loginButtons align="right"}}
+  {{> songs}}
 </template>
 
 <template name="songs">
-  
+  <ul>
+    <li>Never Gonna Give You Up - Rick Astley</li>
+    <li>A Sky Full of Stars - Coldplay</li>
+  </ul>
 </template>
