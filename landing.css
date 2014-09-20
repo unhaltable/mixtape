@@ -34,7 +34,22 @@ input {
             0 0 16px rgba(0,0,0,0.1); 
     padding: 15px;
     background: rgba(255,255,255,0.5);
-    margin: 0 0 10px 0;
+    margin: 0 0 10px 0;    
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+   color:    #D3CDCD;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #D3CDCD;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #D3CDCD;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #D3CDCD;
 }
 
 .join-button {
