@@ -7,6 +7,4 @@ standard-app-packages
 autopublish
 insecure
 accounts-ui
-accounts-facebook
 npaton:accounts-rdio
-

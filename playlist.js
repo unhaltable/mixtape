@@ -2,9 +2,6 @@ if (Meteor.isClient) {
 
   Template.rdio_account.events({
     'click .sign-in': function () {
-
-
-
       alert('yup');
     }
   });
