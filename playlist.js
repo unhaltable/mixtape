@@ -1,15 +1,17 @@
 if (Meteor.isClient) {
-  Template.current_song.greeting = function () {
-    return "Welcome to playlist.";
-  };
 
-  Template.hello.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+  // Set up Spotify API
+  var spotifyApi = new SpotifyWebApi();
+  spotifyApi.setAccessToken('79a509f23c3f4486b94489e71111d418');
+  spotifyApi.setPromiseImplementation(Q);
+
+  Template.spotify_account.events({
+    'click .sign-in': function () {
+
+      alert('yup');
     }
   });
+
 }
 
 if (Meteor.isServer) {
