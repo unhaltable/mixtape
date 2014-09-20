@@ -1,23 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    background-color: #293332;
-    font-family: 'Lato', sans-serif;    
-    color: white;
+  background-color: #293332;
+  color: #fff;
+  font: 16px/20px 'Lato', sans-serif;
+  text-align: center;
 }
 
 .title {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0;
-    margin-bottom: 0;
+  margin: 5em;
 }
 
 .buttons {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    margin-bottom: 0;
+  margin-top: 5em;
 }
 
+input {
+    border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 15px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+}
 
 .join-button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -43,7 +61,7 @@ body {
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	color:#666666;
-	font-family:Arial;
+	font-family:'Lato', sans-serif; 
 	font-size:15px;
 	font-weight:bold;
 	font-style:normal;
@@ -62,4 +80,4 @@ body {
 }.join-button:active {
 	position:relative;
 	top:1px;
-}</style>
+}
