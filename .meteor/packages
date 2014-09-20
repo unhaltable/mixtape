@@ -8,9 +8,8 @@ autopublish
 insecure
 accounts-ui
 iron:router
-meteorhacks:npm
-
-
-npm-container
-service-configuration
 npaton:rdio
+npaton:accounts-rdio
+mrt:q
+jquery
+

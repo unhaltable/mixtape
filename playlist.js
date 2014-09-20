@@ -4,23 +4,27 @@ Router.map(function() {
 });
 
 if (Meteor.isServer) {
-//  var rdio = Meteor.npmRequire('rdio')({
-//    rdio_api_key: 'uq3vzfjq8hng3cc7rr7gx92y',
-//    rdio_api_shared: process.env.RDIO_SECRET,
-//    callback_url: 'http://localhost:3000'
-//  });
+  function getUserRdio() {
+    var user = Meteor.user();
+    if (!user) return "No user";
 
-  ServiceConfiguration.configurations.insert({
-    service: "rdio",
-    clientId: "a",
-    secret: "b"
-  });
+    var rdio = Rdio.forUser(user);
+    if (!rdio) return "No Rdio creadentials";
+    return rdio;
+  }
 
   Meteor.methods({
     getPlaybackToken: function () {
-      if (false /*you want to throw an error*/)
-        throw new Meteor.Error(404, "Can't find my pants");
-      return rdio.api();
+      return getUserRdio().call('getPlaybackToken', {domain: 'localhost'});
+    },
+
+    rdioCall: function (method, params) {
+      var user = Meteor.user();
+      if (!user) return "No user";
+
+      var rdio = Rdio.forUser(user);
+      if (!rdio) return "No Rdio creadentials";
+      return rdio.call(method, params);
     },
 
     foo: function () {
@@ -34,17 +38,13 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isClient) {
+  var deferred = Q.defer();
+  var playbackToken;
 
-  Rdio.requestCredential({}, function(credentialTokenOrErr) {
-    debugger;
+  Meteor.call('getPlaybackToken', function (error, result) {
+    playbackToken = result;
+    deferred.resolve();
   });
-
-  Meteor.call('foo', function () {
-    console.info(arguments);
-  });
-
-  var playbackToken = Meteor.call('getPlaybackToken');
-  $('#now-playing').rdio(playbackToken);
 
   Template.songs.songs = function () {
     return Songs.find({}, { sort: { upvotes: -1}});
@@ -75,5 +75,15 @@ if (Meteor.isClient) {
       }
     }
   });
+
+  Template.mixtape.rendered = function () {
+    deferred.promise.then(function () {
+      var $nowPlaying = $('#now-playing');
+      $nowPlaying.bind('ready.rdio', function() {
+        $(this).rdio().play('a171827');
+      });
+      $nowPlaying.rdio(playbackToken);
+    });
+  };
 
 }
