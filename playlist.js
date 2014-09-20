@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
+  Template.current_song.greeting = function () {
     return "Welcome to playlist.";
   };
 
