@@ -8,7 +8,7 @@
 Router.map(function() {
   this.route('home', { path: '/' });
   this.route('new', {
-    path: '/new/:tag',
+    path: '/new/:tag?',
     data: function () {
       return {
         tag: this.params.tag
@@ -21,3 +21,16 @@ Router.map(function() {
       return Mixtapes.findOne({ tag: this.params.tag })
     }});
 });
+
+if (Meteor.isServer) {
+  /*
+   * Configure Rdio API keys
+   */
+  ServiceConfiguration.configurations.upsert({
+    service: 'rdio'
+  }, {
+    service: 'rdio',
+    consumerKey: 'uq3vzfjq8hng3cc7rr7gx92y',
+    secret: process.env['RDIO_SECRET']
+  });
+}
