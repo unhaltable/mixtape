@@ -1,21 +1,9 @@
 if (Meteor.isClient) {
 
-  Template.spotify_account.events({
+  Template.rdio_account.events({
     'click .sign-in': function () {
 
-      var client_id = '79a509f23c3f4486b94489e71111d418';
-      var redirect_uri = 'http://localhost:3000/';
 
-      var scope = 'user-read-private user-read-email';
-
-      var url = 'https://accounts.spotify.com/authorize';
-      url += '?response_type=token';
-      url += '&client_id=' + encodeURIComponent(client_id);
-      url += '&scope=' + encodeURIComponent(scope);
-      url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-      url += '&state=' + encodeURIComponent(state);
-
-      window.location = url;
 
       alert('yup');
     }
@@ -40,7 +28,7 @@ if (Meteor.isClient) {
           Messages.insert({
             name: name,
             message: message.value,
-            time: Date.now(),
+            time: Date.now()
           });
    
           document.getElementById('message').value = '';

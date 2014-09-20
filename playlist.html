@@ -7,24 +7,24 @@
   <h1>Playlist app</h1>
   {{> current_song }}
   {{> mixtape}}
-  {{> spotify_account}}
+  {{> rdio_account}}
   {{> messages}}
   {{> input}}
   
 </body>
 
 <template name="current_song">
-  {{> spotify_account}}
+  {{> rdio_account}}
   {{> messages}}
   {{> input}}
 </template>
 
 <template name="mixtape">
-  {{> spotify_account}}
+  {{> rdio_account}}
 </template>
 
-<template name="spotify_account">
-  <button class="sign-in">Sign in with Spotify</button>
+<template name="rdio_account">
+  <button class="sign-in">Sign in with Rdio</button>
 </template>
 
 <template name="messages">
@@ -34,8 +34,6 @@
   {{#each messages}}
     <strong>{{name}}:</strong> {{message}}<br>
   {{/each}}
-
-  
 </template>
 
 <template name="input">
