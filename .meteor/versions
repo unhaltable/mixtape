@@ -1,3 +1,8 @@
+accounts-base@1.1.0
+accounts-facebook@1.0.0
+accounts-oauth@1.1.0
+accounts-ui-unstyled@1.1.1
+accounts-ui@1.1.0
 application-configuration@1.0.2
 autopublish@1.0.0
 autoupdate@1.1.0
@@ -13,6 +18,7 @@ ctl@1.0.1
 ddp@1.0.8
 deps@1.0.3
 ejson@1.0.2
+facebook@1.1.0
 fastclick@1.0.0
 follower-livedata@1.0.1
 geojson-utils@1.0.0
@@ -27,7 +33,9 @@ iron:layout@0.4.1
 iron:router@0.9.3
 jquery@1.0.0
 json@1.0.0
+less@1.0.8
 livedata@1.0.9
+localstorage@1.0.0
 logging@1.0.3
 meteor-platform@1.1.0
 meteor@1.1.0
@@ -35,6 +43,8 @@ minifiers@1.1.0
 minimongo@1.0.3
 mobile-status-bar@1.0.0
 mongo@1.0.5
+oauth2@1.1.0
+oauth@1.1.0
 observe-sequence@1.0.2
 ordered-dict@1.0.0
 random@1.0.0
@@ -43,6 +53,7 @@ reactive-var@1.0.1
 reload@1.1.0
 retry@1.0.0
 routepolicy@1.0.1
+service-configuration@1.0.1
 session@1.0.1
 spacebars-compiler@1.0.2
 spacebars@1.0.1

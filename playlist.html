@@ -5,11 +5,12 @@
 <body>
   {{> loginButtons align="right"}}<br>
   <h1>Playlist app</h1>
-  {{> welcome}}
   {{> current_song }}
+  {{> mixtape}}
+  {{> spotify_account}}
   {{> messages}}
   {{> input}}
-  {{> spotify_account}}
+  
 </body>
 
 <template name="loginButtons">
@@ -17,14 +18,12 @@
 </template>
 
 <template name="current_song">
-  
+  {{> spotify_account}}
+  {{> messages}}
+  {{> input}}
 </template>
 
-<template name="welcome">
-  <p>
-    Welcome to the example chat app! Please log in to show your username.
-  </p>
-</template>
+
 
 <template name="mixtape">
   {{> spotify_account}}
@@ -36,7 +35,7 @@
 
 <template name="messages">
   <p>
-    Welcome to the collab playlist app! Please log in to show your username.
+    Welcome to the collab playlist app! Please log in to show your username. Upvote your fav songs!
   </p>
   {{#each messages}}
     <strong>{{name}}:</strong> {{message}}<br>
