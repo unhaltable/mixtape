@@ -23,6 +23,10 @@ body {
     float: left;
 }
 
+@media all and (max-width: 100px) {
+  .album { width: 100%; }
+}
+
 /* Div soup begins here */
 .header-bar {
     height: 1em;   
@@ -46,11 +50,51 @@ body {
     
 }
 
+.progress {
+    height: 15px;
+    width: 100%;
+    background-color: red;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+}
+
+.section {
+    height: 30px;
+    width: 100%;
+    background-color: white;
+    background: rgba(150,150,150,.1);
+}
+
 /* Span soup begins here */
 .playlist-text {
     display: table-cell;
     vertical-align: middle;
     text-align: left;
+}
+
+.playing-name {
+    display: block;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 32px;
+    margin-top: 93px;
+    margin-left: 300px;
+}
+
+.playing-sub {
+    display: block;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 18px;
+    margin-top: 3px;
+    margin-left: 300px;
+}
+
+.section-title {
+    text-align: left;
+    font-size: 30px;
+    display: table-cell;
 }
 
 
