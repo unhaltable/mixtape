@@ -1,7 +1,6 @@
 if (Meteor.isServer) {
   function getHostRdio() {
-    var user = Meteor.user();
-    if (!user) return "No user";
+    var user = Mixtapes.findOne(Session.get('mixtapeId')).host;
     var rdio = Rdio.forUser(user);
     if (!rdio) return "No Rdio credentials";
     return rdio;
@@ -22,6 +21,11 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 
   Session.setDefault('mixtapeId', null);
+
+  Meteor.startup(function () {
+    var tempID = makeId();
+    Session.set('clientID', tempID);
+  });
 
   var mixtapesHandle = Meteor.subscribe('mixtapes', function () {
     Meteor.call('getPlaybackToken', function (error, result) {
@@ -93,6 +97,13 @@ if (Meteor.isClient) {
     return Songs.find({ mixtapeId: mixtapeId }, {sort: {votes: 'desc'}});
   };
 
+  Template.veto.veto = function () {
+    var mixtapeId = Session.get('mixtapeId');
+    if (!mixtapeId)
+      return [];
+    return Songs.find({ mixtapeId: mixtapeId }, {sort: {votes: 'desc'}, limit: 1});
+  };
+
   /*
    * Increment vote count
    */
@@ -130,7 +141,8 @@ if (Meteor.isClient) {
             mixtapeId: Session.get('mixtapeId'),
             name: rdioSong.name,
             artist: rdioSong.artist,
-            votes: 0
+            votes: 1,
+            users: [Session.get('clientID')]
           });
         }
       });
@@ -140,10 +152,38 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.songs.events({
+    'click input': function () {
+      var clientID = Session.get('clientID');
+      //check if the song has been clicked by the user before
+      var userArray = Songs.findOne({_id: this._id}, {field:'users'}).users;
+
+      //find out if user is in this new array
+      if (userArray.indexOf(clientID) === -1) {
+        Songs.update(this._id, {$inc: {upvotes: 1}});
+        Songs.update(this._id, {$push: {users: clientID}});
+      } else {
+        Songs.update(this._id, {$inc: {upvotes: -1}});
+        Songs.update(this._id, {$pull: {users: clientID}});
+      }
+    }
+  });
+
   Template.mixtape.rendered = function () {
-    debugger;
-    var mixtapeTag = Router.current().data().tag;
-    Session.set('mixtapeId', Mixtapes.findOne({ tag: mixtapeTag })._id);
+    Meteor.subscribe('mixtapeId', function () {
+      var mixtapeTag = Router.current().data().tag;
+      Session.set('mixtapeId', Mixtapes.findOne({ tag: mixtapeTag })._id);
+    });
+  };
+
+  function makeId() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 16; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
   }
 
 }
