@@ -18,7 +18,9 @@ Router.map(function() {
   this.route('mixtape', {
     path: '/:tag',
     data: function () {
-      return Mixtapes.findOne({ tag: this.params.tag })
+      return {
+        mixtape: Mixtapes.findOne({ tag: this.params.tag })
+      };
     }});
 });
 
@@ -34,3 +36,13 @@ if (Meteor.isServer) {
     secret: process.env['RDIO_SECRET']
   });
 }
+
+/*
+ * Database models
+ */
+
+// Individual song data; ephemeral and unique to Mixtapes
+Songs = new Mongo.Collection('songs');
+
+// Mixtapes
+Mixtapes = new Mongo.Collection('mixtapes');
