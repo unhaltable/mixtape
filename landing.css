@@ -19,6 +19,7 @@ body {
   color: #fff;
   font: 16px/20px 'Lato', sans-serif;
   text-align: center;
+  background-repeat: no-repeat;
 }
 
 .shade {
