@@ -36,12 +36,12 @@
 <template name="songs">
 
   <h3>Playlist</h3>
-  {{> veto}}
   <ul>
+    {{> veto}}
     {{#each songs}}
     <li>
-      <input type="button" value="Vote">
       <strong>{{title}}:</strong> {{artist}} {{votes}}
+      <input type="button" value="Vote">
     </li>
     {{/each}}
   </ul>

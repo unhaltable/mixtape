@@ -57,15 +57,6 @@ if (Meteor.isClient) {
   };
 
   /*
-   * Increment vote count
-   */
-  Template.songs.events({
-    'click input': function () {
-      Songs.update(this._id, {$inc: {votes: 1}});
-    }
-  });
-
-  /*
    * Adding songs
    */
   Template.add_song.events({
@@ -85,6 +76,8 @@ if (Meteor.isClient) {
           alert(error);
         } else if (!result.results.length) {
           alert('No songs found for query: "' + $songQuery.val() + '"');
+        } else if (Songs.find({mixtapeId: Session.get('mixtapeId')}, {}).count() >= 15) {
+          alert('This mixtape is full right now');
         } else {
           rdioSong = result.results[0];
 
@@ -94,7 +87,8 @@ if (Meteor.isClient) {
             name: rdioSong.name,
             artist: rdioSong.artist,
             votes: 1,
-            users: [Session.get('clientID')]
+            users: [Session.get('clientID')],
+            veto: 0
           });
         }
       });
@@ -104,6 +98,9 @@ if (Meteor.isClient) {
     }
   });
 
+  /*
+   * Increment vote count
+   */
   Template.songs.events({
     'click input': function () {
       var clientID = Session.get('clientID');
