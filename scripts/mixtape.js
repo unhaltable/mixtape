@@ -39,8 +39,11 @@ if (Meteor.isClient) {
   var playbackToken;
 
   Meteor.startup(function () {
-    var tempID = makeid();
-    Session.set("clientID", tempID);
+    console.log(Session.get("clientID"));
+    if (true) {
+      var tempID = makeid();
+      Session.set("clientID", tempID);
+    }
   });
 
   Meteor.call('getPlaybackToken', function (error, result) {
@@ -48,15 +51,20 @@ if (Meteor.isClient) {
     deferred.resolve();
   });
 
+  //EDIT TO QUERY MIXTAPE
   Template.songs.songs = function () {
     return Songs.find({}, { sort: { upvotes: -1}});
+  };
+  Template.veto.veto = function () {
+    return Songs.find({}, { sort: { upvotes: -1}, limit: 1});
+    //var firstID = Songs.findOne({}, { sort: { upvotes: -1}}).fetch()._id;
+    //return firstID == id;
   };
 
   Template.add_song.events({
     'click input': function () {
       var song_title = document.getElementById('new_song_title');
       var song_artist = document.getElementById('new_song_artist');
-      //var userProfileName = "bob";//Meteor.user().profile.name;
       var clientID = Session.get('clientID');
 
       //REPLACE WITH RDIO SONG METADATA
@@ -78,7 +86,6 @@ if (Meteor.isClient) {
 
   Template.songs.events({
     'click input': function () {
-      //var profile_name = "bob";//Meteor.user().profile.name; 
       var clientID = Session.get('clientID');
       //check if the song has been clicked by the user before
       var userCursor = Songs.find({_id: this._id}, {field:'users'});
@@ -126,7 +133,7 @@ function makeid()
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < 8; i++ )
+    for( var i=0; i < 16; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;

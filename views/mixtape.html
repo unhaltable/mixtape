@@ -9,9 +9,18 @@
 <template name="songs">
 
   <h3>Playlist</h3>
+  {{> veto}}
   {{#each songs}}
-    <input type="button" value="Upvote" />
-    <strong>{{name}}:</strong> {{artist}} {{upvotes}}<br>
+    <strong>{{name}} - </strong> {{artist}} {{upvotes}}
+    <input type="button" value="Upvote" /><br>
+  {{/each}}
+
+</template>
+
+<template name="veto">
+
+  {{#each veto}}
+    <input type="button" value="Veto" />
   {{/each}}
 
 </template>
