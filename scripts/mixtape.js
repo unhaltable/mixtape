@@ -49,7 +49,30 @@ if (Meteor.isClient) {
 
   Template.songs.events({
     'click input': function () {
-      Songs.update(this._id, {$inc: {upvotes: 1}});
+
+      var profile_name = Meteor.user().profile.name; 
+
+      //check if the song has been clicked by the user before
+      var songObj = Songs.find({_id: this._id}, {field:'users'});
+      console.log(songObj);
+      var temp = songObj.fetch();
+      console.log(temp);
+      var userArray = temp['field'];
+
+      //var allUsers = Songs.find({_id: this._id}, {field:'users'}).toArray();
+      //console.log(allUsers);
+
+
+      //find out if user is in this new array
+      if(!contains(userArray, profile_name)){
+        Songs.update(this._id, {$inc: {upvotes: 1}});
+        Songs.update(this._id, {$push: {users: profile_name}});
+
+      }
+      else{
+        Songs.update(this._id, {$inc: {upvotes: -1}});
+        Songs.update(this._id, {$pull: {users: profile_name}});
+      }
     }
   });
 
@@ -62,8 +85,11 @@ if (Meteor.isClient) {
         Songs.insert({
           name: song_title.value,
           artist: song_artist.value,
-          upvotes: 0
+          upvotes: 0,
+          users: [userProfileName],
         });
+        //put the user profile name in the database document for
+        //the current song
 
         document.getElementById('new_song_title').value = '';
         document.getElementById('new_song_artist').value = '';
