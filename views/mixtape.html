@@ -1,12 +1,12 @@
 <template name="mixtape">
   {{> loginButtons style="float: right;"}}<br>
-  <div id="now-playing"></div>
+  {{> now_playing}}
   {{> songs}}
   {{> add_song}}
 
 </template>
 
-<template name="now-playing">
+<template name="now_playing">
 
   <div id="now-playing"></div>
   <img id="art" src="" height="200" width="200">
@@ -40,8 +40,8 @@
   <ul>
     {{#each songs}}
     <li>
-      <input type="button" value="Upvote">
-      <strong>{{title}}:</strong> {{artist}} {{upvotes}}
+      <input type="button" value="Vote">
+      <strong>{{title}}:</strong> {{artist}} {{votes}}
     </li>
     {{/each}}
   </ul>
@@ -53,7 +53,6 @@
   {{#each veto}}
     <input type="button" value="Veto" />
   {{/each}}
-  </ul>
 
 </template>
 
