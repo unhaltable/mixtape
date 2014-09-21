@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
 insecure
 accounts-ui
 iron:router
@@ -13,4 +12,3 @@ npaton:accounts-rdio
 mrt:q
 jquery
 service-configuration
-

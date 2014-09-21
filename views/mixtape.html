@@ -8,21 +8,26 @@
 
 <template name="now-playing">
 
-  <div id="api"></div>
-  <img id="art" src="" height="200" width="200" style="float:left;margin-right:20px;">
+  <div id="now-playing"></div>
+  <img id="art" src="" height="200" width="200">
   <div>
-    <div><b>Track: </b><span id="track"></span></div>
-    <div><b>Album: </b><span id="album"></span></div>
-    <div><b>Artist: </b><span id="artist"></span></div>
-    <div><b>Position: </b>
+    <div>
+      <span>Track: </span>
+      <span id="track"></span>
+    </div>
+    <div>
+      <span>Album: </span>
+      <span id="album"></span>
+    </div>
+    <div>
+      <span>Artist: </span>
+      <span id="artist"></span>
+    </div>
+    <div>
+      <span>Position: </span>
       <span style="display:inline-block;width:200px;border:1px solid black;">
         <span id="position" style="display:inline-block;background-color:#666">&nbsp;</span>
-      </span></div>
-    <div>
-      <button id="previous">&lt;&lt;</button>
-      <button id="play">|&gt;</button>
-      <button id="pause">||</button>
-      <button id="next">&gt;&gt;</button>
+      </span>
     </div>
   </div>
 
@@ -32,10 +37,14 @@
 
   <h3>Playlist</h3>
   {{> veto}}
-  {{#each songs}}
-    <strong>{{name}} - </strong> {{artist}} {{upvotes}}
-    <input type="button" value="Upvote" /><br>
-  {{/each}}
+  <ul>
+    {{#each songs}}
+    <li>
+      <input type="button" value="Upvote">
+      <strong>{{title}}:</strong> {{artist}} {{upvotes}}
+    </li>
+    {{/each}}
+  </ul>
 
 </template>
 
@@ -44,16 +53,15 @@
   {{#each veto}}
     <input type="button" value="Veto" />
   {{/each}}
+  </ul>
 
 </template>
 
 <template name="add_song">
 
   <h2>Add new song</h2>
-  <label for="new_song_title">Title</label>
-  <input type="text" id="new_song_title">
-  <label for="new_song_artist">Artist</label>
-  <input type="text" id="new_song_artist">
-  <input type="submit" value="Add song">
+  <label for="song-query">Search for a song</label>
+  <input type="text" id="song-query">
+  <input type="submit" id="add-song" value="Add song">
 
 </template>

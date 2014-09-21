@@ -1,12 +1,9 @@
-var mixtape;
-
 if (Meteor.isServer) {
   function getHostRdio() {
     var user = Meteor.user();
     if (!user) return "No user";
-
     var rdio = Rdio.forUser(user);
-    if (!rdio) return "No Rdio creadentials";
+    if (!rdio) return "No Rdio credentials";
     return rdio;
   }
 
@@ -16,106 +13,137 @@ if (Meteor.isServer) {
     },
 
     rdioCall: function (method, params) {
-      var user = Meteor.user();
-      if (!user) return "No user";
-
-      var rdio = Rdio.forUser(user);
-      if (!rdio) return "No Rdio creadentials";
-      return rdio.call(method, params);
-    },
-
-    foo: function () {
-      return 'foo';
+      return getHostRdio().call(method, params);
     }
   });
 
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
 }
 
 if (Meteor.isClient) {
-  var playbackToken;
 
-  var duration = 1; // track the duration of the currently playing track
-  $(document).ready(function() {
-    $('#api').bind('ready.rdio', function() {
-      $(this).rdio().play('a171827');
-    });
-    $('#api').bind('playingTrackChanged.rdio', function(e, playingTrack, sourcePosition) {
-      if (playingTrack) {
-        duration = playingTrack.duration;
-        $('#art').attr('src', playingTrack.icon);
-        $('#track').text(playingTrack.name);
-        $('#album').text(playingTrack.album);
-        $('#artist').text(playingTrack.artist);
-      }
-    });
-    $('#api').bind('positionChanged.rdio', function(e, position) {
-      $('#position').css('width', Math.floor(100*position/duration)+'%');
-    });
-    $('#api').bind('playStateChanged.rdio', function(e, playState) {
-      if (playState == 0) { // paused
-        $('#play').show();
-        $('#pause').hide();
-      } else {
-        $('#play').hide();
-        $('#pause').show();
-      }
-    });
-    // this is a valid playback token for localhost.
-    // but you should go get your own for your own domain.
-    $('#api').rdio('GAlUHeu5AD6RSnVxM3Z6ZmpxOGhuZzNjYzdycjdneDkyeWxvY2FsaG9zdH02VwM26Tq25vHhyoOD6fg=');
+  Session.setDefault('mixtapeId', null);
 
-    $('#previous').click(function() { $('#api').rdio().previous(); });
-    $('#play').click(function() { $('#api').rdio().play(); });
-    $('#pause').click(function() { $('#api').rdio().pause(); });
-    $('#next').click(function() { $('#api').rdio().next(); });
+  var mixtapesHandle = Meteor.subscribe('mixtapes', function () {
+    Meteor.call('getPlaybackToken', function (error, result) {
+      var playbackToken = result;
+      var $nowPlaying = $('#now-playing');
+
+      $nowPlaying.bind('ready.rdio', function () {
+        // Rdio widget is ready
+        $(this).rdio().play('t22410658');
+      });
+
+      $nowPlaying.bind('playingTrackChanged.rdio', function (e, playingTrack, sourcePosition) {
+        if (playingTrack) {
+          duration = playingTrack.duration;
+          $('#art').attr('src', playingTrack.icon);
+          $('#track').text(playingTrack.name);
+          $('#album').text(playingTrack.album);
+          $('#artist').text(playingTrack.artist);
+        }
+      });
+      $nowPlaying.bind('positionChanged.rdio', function (e, position) {
+        $('#position').css('width', Math.floor(100 * position / duration) + '%');
+      });
+      $nowPlaying.bind('playStateChanged.rdio', function (e, playState) {
+        if (playState == 0) { // paused
+          $('#play').show();
+          $('#pause').hide();
+        } else {
+          $('#play').hide();
+          $('#pause').show();
+        }
+      });
+
+      $nowPlaying.rdio(playbackToken);
+
+      $('#previous').click(function () {
+        $('#api').rdio().previous();
+      });
+      $('#play').click(function () {
+        $('#api').rdio().play();
+      });
+      $('#pause').click(function () {
+        $('#api').rdio().pause();
+      });
+      $('#next').click(function () {
+        $('#api').rdio().next();
+      });
+    });
   });
 
-
+  var songsHandle;
+  // Always be subscribed to the songs for the selected mixtape.
+  Deps.autorun(function () {
+    var mixtapeId = Session.get('mixtapeId');
+    if (mixtapeId)
+      songsHandle = Meteor.subscribe('songs', mixtapeId);
+    else
+      songsHandle = null;
+  });
 
   Template.songs.songs = function () {
-    return Songs.find({}, { sort: { upvotes: -1}});
+    // Determine which songs to display in main pane,
+    // selected based on mixtapeId
+    var mixtapeId = Session.get('mixtapeId');
+    if (!mixtapeId)
+      return [];
+
+    debugger;
+    return Songs.find({ mixtapeId: mixtapeId }, {sort: {votes: 'desc'}});
   };
 
+  /*
+   * Increment vote count
+   */
   Template.songs.events({
     'click input': function () {
-      Songs.update(this._id, {$inc: {upvotes: 1}});
+      Songs.update(this._id, {$inc: {votes: 1}});
     }
   });
 
+  /*
+   * Adding songs
+   */
   Template.add_song.events({
-    'click input': function () {
-      var song_title = document.getElementById('new_song_title');
-      var song_artist = document.getElementById('new_song_artist');
+    'click #add-song': function () {
+      var $songQuery = $('#song-query');
+      var rdioSong;
 
-      if (new_song_title.value != '' && new_song_artist.value != '') {
-        Songs.insert({
-          name: song_title.value,
-          artist: song_artist.value,
-          upvotes: 0
-        });
+      if ($songQuery.val().trim() === '')
+        return;
 
-        document.getElementById('new_song_title').value = '';
-        document.getElementById('new_song_artist').value = '';
-        song_title.value = '';
-        song_artist.value = '';
-      }
+      Meteor.call('rdioCall', 'search', {
+        query: $songQuery.val(),
+        types: ['Track'],
+        count: 1
+      }, function (error, result) {
+        if (error) {
+          alert(error);
+        } else if (!result.results.length) {
+          alert('No songs found for query: "' + $songQuery.val() + '"');
+        } else {
+          rdioSong = result.results[0];
+
+          Songs.insert({
+            rdioKey: rdioSong.key,
+            mixtapeId: Session.get('mixtapeId'),
+            name: rdioSong.name,
+            artist: rdioSong.artist,
+            votes: 0
+          });
+        }
+      });
+
+      // Clear the search field
+      $songQuery.val('');
     }
   });
 
   Template.mixtape.rendered = function () {
-    mixtape = Router.current().data().mixtape;
-
-    Meteor.call('getPlaybackToken', function (error, result) {
-      playbackToken = result;
-      var $nowPlaying = $('#now-playing');
-      $nowPlaying.bind('ready.rdio', function() {
-        $(this).rdio().play('a171827');
-      });
-      $nowPlaying.rdio(playbackToken);
-    });
-  };
+    debugger;
+    var mixtapeTag = Router.current().data().tag;
+    Session.set('mixtapeId', Mixtapes.findOne({ tag: mixtapeTag })._id);
+  }
 
 }

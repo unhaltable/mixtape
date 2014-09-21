@@ -17,12 +17,26 @@ Router.map(function() {
   });
   this.route('mixtape', {
     path: '/:tag',
+    waitOn: function () {
+      return Meteor.subscribe('mixtapes');
+    },
     data: function () {
       return {
-        mixtape: Mixtapes.findOne({ tag: this.params.tag })
+        tag: this.params.tag
       };
-    }});
+    }
+  });
 });
+
+/*
+ * Resources
+ */
+// Mixtapes
+Mixtapes = new Mongo.Collection('mixtapes');
+
+// Individual song data; ephemeral and unique to Mixtapes
+Songs = new Mongo.Collection('songs');
+
 
 if (Meteor.isServer) {
   /*
@@ -35,14 +49,15 @@ if (Meteor.isServer) {
     consumerKey: 'uq3vzfjq8hng3cc7rr7gx92y',
     secret: process.env['RDIO_SECRET']
   });
+
+  /*
+   * Publish resources
+   */
+  Meteor.publish('mixtapes', function () {
+    return Mixtapes.find();
+  });
+
+  Meteor.publish('songs', function (mixtapeId) {
+    return Songs.find({ mixtapeId: mixtapeId });
+  });
 }
-
-/*
- * Database models
- */
-
-// Individual song data; ephemeral and unique to Mixtapes
-Songs = new Mongo.Collection('songs');
-
-// Mixtapes
-Mixtapes = new Mongo.Collection('mixtapes');

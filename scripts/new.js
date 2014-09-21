@@ -21,6 +21,7 @@ if (Meteor.isClient) {
         if (error) {
           alert(error);
         } else {
+          debugger;
           window.location.href = '/' + mixtapeTag;
         }
       });
