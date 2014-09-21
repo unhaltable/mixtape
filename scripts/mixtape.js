@@ -47,54 +47,46 @@ if (Meteor.isClient) {
     return Songs.find({}, { sort: { upvotes: -1}});
   };
 
-  Template.songs.events({
-    'click input': function () {
-
-      var profile_name = Meteor.user().profile.name; 
-
-      //check if the song has been clicked by the user before
-      var songObj = Songs.find({_id: this._id}, {field:'users'});
-      console.log(songObj);
-      var temp = songObj.fetch();
-      console.log(temp);
-      var userArray = temp['field'];
-
-      //var allUsers = Songs.find({_id: this._id}, {field:'users'}).toArray();
-      //console.log(allUsers);
-
-
-      //find out if user is in this new array
-      if(!contains(userArray, profile_name)){
-        Songs.update(this._id, {$inc: {upvotes: 1}});
-        Songs.update(this._id, {$push: {users: profile_name}});
-
-      }
-      else{
-        Songs.update(this._id, {$inc: {upvotes: -1}});
-        Songs.update(this._id, {$pull: {users: profile_name}});
-      }
-    }
-  });
-
   Template.add_song.events({
     'click input': function () {
       var song_title = document.getElementById('new_song_title');
       var song_artist = document.getElementById('new_song_artist');
+      var userProfileName = "bob";//Meteor.user().profile.name;
 
+      //REPLACE WITH RDIO SONG METADATA
       if (new_song_title.value != '' && new_song_artist.value != '') {
         Songs.insert({
           name: song_title.value,
           artist: song_artist.value,
-          upvotes: 0,
-          users: [userProfileName],
+          upvotes: 1,
+          users: [userProfileName]
         });
-        //put the user profile name in the database document for
-        //the current song
 
         document.getElementById('new_song_title').value = '';
         document.getElementById('new_song_artist').value = '';
         song_title.value = '';
         song_artist.value = '';
+      }
+    }
+  });
+
+  Template.songs.events({
+    'click input': function () {
+      var profile_name = "bob";//Meteor.user().profile.name; 
+      //check if the song has been clicked by the user before
+      var userCursor = Songs.find({_id: this._id}, {field:'users'});
+      var userCollection = userCursor.fetch()[0];
+      var userArray = userCollection.users;
+      console.log(userCollection);
+      console.log(userArray);
+
+      //find out if user is in this new array
+      if(!contains(userArray, profile_name)){
+        Songs.update(this._id, {$inc: {upvotes: 1}});
+        Songs.update(this._id, {$push: {users: profile_name}});
+      } else {
+        Songs.update(this._id, {$inc: {upvotes: -1}});
+        Songs.update(this._id, {$pull: {users: profile_name}});
       }
     }
   });
@@ -109,4 +101,15 @@ if (Meteor.isClient) {
     });
   };
 
+}
+
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+      console.log(a[i]);
+      console.log(obj);
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
 }
