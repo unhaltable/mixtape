@@ -38,6 +38,11 @@ if (Meteor.isClient) {
   var deferred = Q.defer();
   var playbackToken;
 
+  Meteor.startup(function () {
+    var tempID = makeid();
+    Session.set("clientID", tempID);
+  });
+
   Meteor.call('getPlaybackToken', function (error, result) {
     playbackToken = result;
     deferred.resolve();
@@ -51,7 +56,8 @@ if (Meteor.isClient) {
     'click input': function () {
       var song_title = document.getElementById('new_song_title');
       var song_artist = document.getElementById('new_song_artist');
-      var userProfileName = "bob";//Meteor.user().profile.name;
+      //var userProfileName = "bob";//Meteor.user().profile.name;
+      var clientID = Session.get('clientID');
 
       //REPLACE WITH RDIO SONG METADATA
       if (new_song_title.value != '' && new_song_artist.value != '') {
@@ -59,7 +65,7 @@ if (Meteor.isClient) {
           name: song_title.value,
           artist: song_artist.value,
           upvotes: 1,
-          users: [userProfileName]
+          users: [clientID]
         });
 
         document.getElementById('new_song_title').value = '';
@@ -72,7 +78,8 @@ if (Meteor.isClient) {
 
   Template.songs.events({
     'click input': function () {
-      var profile_name = "bob";//Meteor.user().profile.name; 
+      //var profile_name = "bob";//Meteor.user().profile.name; 
+      var clientID = Session.get('clientID');
       //check if the song has been clicked by the user before
       var userCursor = Songs.find({_id: this._id}, {field:'users'});
       var userCollection = userCursor.fetch()[0];
@@ -81,12 +88,12 @@ if (Meteor.isClient) {
       console.log(userArray);
 
       //find out if user is in this new array
-      if(!contains(userArray, profile_name)){
+      if(!contains(userArray, clientID)){
         Songs.update(this._id, {$inc: {upvotes: 1}});
-        Songs.update(this._id, {$push: {users: profile_name}});
+        Songs.update(this._id, {$push: {users: clientID}});
       } else {
         Songs.update(this._id, {$inc: {upvotes: -1}});
-        Songs.update(this._id, {$pull: {users: profile_name}});
+        Songs.update(this._id, {$pull: {users: clientID}});
       }
     }
   });
@@ -112,4 +119,15 @@ function contains(a, obj) {
         }
     }
     return false;
+}
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 8; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }
