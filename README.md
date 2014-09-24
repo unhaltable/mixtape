@@ -1,7 +1,7 @@
 Mixtape
 =======
 
-Real-time music playlist collaboration.
+Real-time music playlist collaboration. Picture of landing page: http://imgur.com/kf4RtBd
 
 ### Overview
 
