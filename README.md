@@ -5,7 +5,7 @@ Real-time music playlist collaboration. Picture of landing page: http://imgur.co
 
 ### Overview
 
-Mixtape is a real-time music playlist collaboration web app that allows hosts to create a mixtape which allows guests to join and contribute to the mixtape through song suggestions and user voting.
+Mixtape is a real-time music playlist collaboration web app that allows hosts to create a mixtape which guests can join and contribute through song suggestions and user voting.
 
 ### Development
 
