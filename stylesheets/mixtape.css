@@ -1,0 +1,9 @@
+.shade {
+    width: 40%;
+    background-color: #D7D2D2;
+    background: rgba(0,0,0,.2);
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    padding: 5em 2em;
+}

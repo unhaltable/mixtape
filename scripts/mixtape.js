@@ -11,8 +11,8 @@ if (Meteor.isServer) {
       return getHostRdio(mixtapeId).call('getPlaybackToken', {domain: 'localhost'});
     },
 
-    rdioCall: function (method, params) {
-      return getHostRdio().call(method, params);
+    rdioCall: function (mixtapeId, method, params) {
+      return getHostRdio(mixtapeId).call(method, params);
     }
   });
 
@@ -21,6 +21,8 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 
   Session.setDefault('mixtapeId', null);
+
+  Session.setDefault('songKey', null);
 
   Meteor.startup(function () {
     var tempID = makeId();
@@ -46,7 +48,11 @@ if (Meteor.isClient) {
     if (!mixtapeId)
       return [];
 
-    return Songs.find({ mixtapeId: mixtapeId }, {sort: {votes: 'desc'}});
+    var cursor = Songs.find({ mixtapeId: mixtapeId }, {sort: {votes: 'desc'}});
+    if (cursor.fetch().length && cursor.fetch()[0].rdioKey !== Session.get('songKey'))
+      Session.set('songKey', cursor.fetch()[0].rdioKey);
+
+    return cursor;
   };
 
   Template.veto.veto = function () {
@@ -67,7 +73,7 @@ if (Meteor.isClient) {
       if ($songQuery.val().trim() === '')
         return;
 
-      Meteor.call('rdioCall', 'search', {
+      Meteor.call('rdioCall', Session.get('mixtapeId'), 'search', {
         query: $songQuery.val(),
         types: ['Track'],
         count: 1
@@ -109,16 +115,18 @@ if (Meteor.isClient) {
 
       //find out if user is in this new array
       if (userArray.indexOf(clientID) === -1) {
-        Songs.update(this._id, {$inc: {upvotes: 1}});
+        Songs.update(this._id, {$inc: {votes: 1}});
         Songs.update(this._id, {$push: {users: clientID}});
       } else {
-        Songs.update(this._id, {$inc: {upvotes: -1}});
+        Songs.update(this._id, {$inc: {votes: -1}});
         Songs.update(this._id, {$pull: {users: clientID}});
       }
     }
   });
 
   Template.mixtape.rendered = function () {
+    var template = this;
+
     Meteor.subscribe('mixtapes', function () {
       var mixtapeTag = Router.current().data().tag;
       Session.set('mixtapeId', Mixtapes.findOne({ tag: mixtapeTag })._id);
@@ -129,10 +137,15 @@ if (Meteor.isClient) {
 
         $nowPlaying.bind('ready.rdio', function () {
           // Rdio widget is ready
-          $(this).rdio().play('t22410658');
+          template.autorun(function () {
+            var songKey = Session.get('songKey');
+            if (songKey)
+              $('#now-playing').rdio().play(songKey);
+          });
         });
 
         $nowPlaying.bind('playingTrackChanged.rdio', function (e, playingTrack, sourcePosition) {
+          var duration;
           if (playingTrack) {
             duration = playingTrack.duration;
             $('#art').attr('src', playingTrack.icon);
