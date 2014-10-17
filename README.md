@@ -1,7 +1,11 @@
 Mixtape
 =======
 
-Real-time music playlist collaboration. Picture of landing page: http://imgur.com/kf4RtBd
+Real-time music playlist collaboration. 
+
+Picture of landing page: http://imgur.com/kf4RtBd
+
+Picture of main playlist view: http://imgur.com/w8nza5J
 
 ### Overview
 
