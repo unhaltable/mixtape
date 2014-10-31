@@ -1,8 +1,9 @@
 <template name="mixtape">
   {{> loginButtons style="float: right;"}}<br>
-  {{> now_playing}}
-  {{> songs}}
+  {{> now_playing}} <br>
+  {{> songs}} <br>
   {{> add_song}}
+
 
 </template>
 
@@ -38,11 +39,10 @@
 
   <h3>Playlist</h3>
   <ul>
-    {{> veto}}
     {{#each songs}}
     <li>
-      <strong>{{title}}:</strong> {{artist}} {{votes}}
-      <input type="button" value="Vote">
+      <strong>{{name}} - </strong> {{artist}} <br>
+      <p>Number of votes: {{votes}} </p><input type="button" value="Vote">
     </li>
     {{/each}}
   </ul>
@@ -65,3 +65,4 @@
   <input type="submit" id="add-song" value="Add song">
 
 </template>
+

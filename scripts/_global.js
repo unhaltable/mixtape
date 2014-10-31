@@ -46,8 +46,9 @@ if (Meteor.isServer) {
     service: 'rdio'
   }, {
     service: 'rdio',
-    consumerKey: 'uq3vzfjq8hng3cc7rr7gx92y',
-    secret: process.env['RDIO_SECRET']
+    consumerKey: 'd4xf7s7rqwxy6cvtga7tnqmj',
+    secret: '2sgn8JGYCG'
+    //process.env['RDIO_SECRET']
   });
 
   /*
